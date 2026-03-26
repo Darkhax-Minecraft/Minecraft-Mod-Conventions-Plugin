@@ -10,6 +10,8 @@ version = '26.1.0'
 def buildNumber = System.getenv('BUILD_NUMBER') ? System.getenv('BUILD_NUMBER') : System.getenv('TRAVIS_BUILD_NUMBER') ? System.getenv('TRAVIS_BUILD_NUMBER') : '0'
 version = "${project.version}.${buildNumber}".toString()
 
+project.logger.lifecycle("Building ${group} ${version}")
+
 gradlePlugin {
     plugins {
         website = 'https://github.com/Darkhax-Minecraft/Minecraft-Mod-Conventions-Plugin'
