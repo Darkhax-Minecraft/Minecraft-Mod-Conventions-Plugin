@@ -1,0 +1,1 @@
+rootProject.name = "Darkhax-Minecraft-Mod-Conventions"
