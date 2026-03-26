@@ -11,7 +11,7 @@ pipeline {
                 withCredentials([ file(credentialsId: 'gradle_secrets', variable: 'ORG_GRADLE_PROJECT_secretFile') ]) {
                     echo 'Building project.'
                     sh 'chmod +x gradlew'
-                    sh './gradlew clean build publishPlugins --stacktrace --warn'
+                    sh './gradlew clean build publishPlugins --stacktrace'
                 }
             }
         }
