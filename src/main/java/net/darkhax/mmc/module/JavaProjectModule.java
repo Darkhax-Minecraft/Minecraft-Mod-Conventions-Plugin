@@ -100,7 +100,7 @@ public class JavaProjectModule {
             properties.put("java_version", target.javaVersion());
             properties.put("curse_project", config.curseforge().id());
             properties.put("curse_page", "https://www.curseforge.com/minecraft/mc-mods/" + config.curseforge().slug());
-            properties.put("modrinth_project", config.mod().id());
+            properties.put("modrinth_project", config.modrinth().id());
             properties.put("modrinth_page", "https://modrinth.com/mod/" + config.modrinth().slug());
             properties.put(PatreonModule.PATRONS, PatreonModule.getPatrons(project));
             if (platform == Platform.FABRIC) {
