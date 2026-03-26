@@ -19,6 +19,9 @@ if (project.hasProperty('secretFile')) {
         loadProperties(secretsFile)
         project.logger.lifecycle('Automatically loading properties from the secretFile')
     }
+    else {
+        project.logger.lifecycle('Could not load secrets file!')
+    }
 }
 
 // Loads properties using a specified json file.
