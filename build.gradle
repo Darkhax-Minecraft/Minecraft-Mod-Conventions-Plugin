@@ -11,8 +11,12 @@ version = "${project.version}.${buildNumber}".toString()
 
 gradlePlugin {
     plugins {
-        commonConventions {
+        website = 'https://github.com/Darkhax-Minecraft/Minecraft-Mod-Conventions-Plugin'
+        vcsUrl = 'https://github.com/Darkhax-Minecraft/Minecraft-Mod-Conventions-Plugin.git'
+        register('mmcPlugin') {
             id = 'net.darkhax.mmc'
+            displayName = "Multiloader Conventions Plugin"
+            description = "A highly opinionated conventions plugin for developing Minecraft mods that are compatible with multiple mod loaders."
             implementationClass = 'net.darkhax.mmc.ConventionsPlugin'
             tags.set(['mod', 'minecraft'])
         }
