@@ -56,7 +56,7 @@ public class JavaProjectModule {
 
         // Base Extension
         final BasePluginExtension base = project.getExtensions().getByType(BasePluginExtension.class);
-        base.getArchivesName().set(config.mod().id() + "-" + project.getName() + "-" + target.gameVersion());
+        base.getArchivesName().set(config.mod().getFileDisplayName() + "-" + project.getName() + "-MC" + target.gameVersion());
 
         // Java Extension
         final JavaPluginExtension java = project.getExtensions().getByType(JavaPluginExtension.class);
