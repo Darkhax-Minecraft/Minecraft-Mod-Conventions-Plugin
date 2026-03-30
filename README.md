@@ -261,6 +261,11 @@ plugins {
 }
 ```
 
+**LICENSE**
+```
+Your license text in this file.
+```
+
 ### Common
 
 **build.gradle**
