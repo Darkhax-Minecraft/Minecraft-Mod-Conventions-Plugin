@@ -203,3 +203,91 @@ Projects can use the following property tokens in their project resources.
 - modrinth_project - The project ID for the project on Modrinth.
 - modrinth_page - The project page on Modrinth.
 - mod_target_environment - Sided information for Fabric projects.
+
+## Project Setup
+
+This plugin aims to make plugin setup very simple, inlining most of the setup
+logic into the plugin itself.
+
+### Root Project
+
+**settings.gradle.kts**
+```kotlin
+rootProject.name = "YourProjectName"
+pluginManagement {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+        maven {
+            name = "Fabric"
+            url = uri("https://maven.fabricmc.net/")
+        }
+    }
+}
+include("common", "neoforge", "fabric")
+```
+
+**build.gradle.kts**
+```kotlin
+plugins {
+    id("net.darkhax.mmc") version "26.1.0.7"
+}
+```
+
+**build-config.json**
+```json
+{
+  "mod": {
+    "name": "YourProjectName",
+    "group": "com.example.you",
+    "authors": [
+      "It's you!"
+    ],
+    "id": "your-id",
+    "license": "A license!",
+    "description": "Describe your mod!",
+    "repo": "https://github.com/you/reponame",
+    "client": false
+  },
+  "dependencies": [],
+  "curseforge": {
+    "slug": "your-id",
+    "id": "0000"
+  },
+  "modrinth": {
+    "slug": "your-id",
+    "id": "0000"
+  }
+}
+```
+
+### Common
+
+**build.gradle**
+```groovy
+```
+
+**Required Files**
+- src/main/resources/logo_modid.png
+- src/main/resources/modid.common.mixins.json
+- src/main/resources/pack.mcmeta
+
+### Fabric
+
+**build.gradle**
+```groovy
+```
+
+**Required Files**
+- src/main/resources/modid.fabric.mixins.json
+- src/main/resources/fabric.mod.json
+
+### NeoForge
+
+**build.gradle**
+```groovy
+```
+
+**Required Files**
+- src/main/resources/modid.neoforge.mixins.json
+- src/main/resources/META-INF/neoforge.mods.toml
