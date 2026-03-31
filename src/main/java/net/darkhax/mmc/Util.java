@@ -22,6 +22,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -94,7 +95,7 @@ public class Util {
     public static void configureMavenPublishing(Project project, GameTarget target, Platform platform, BuildConfig config) {
         project.getExtensions().getByType(PublishingExtension.class).publications(publications -> {
             publications.register("mavenJava", MavenPublication.class, mavenPub -> {
-                mavenPub.setArtifactId(config.mod().getFileDisplayName() + "-" + platform.name() + "-" +  target.gameVersion());
+                mavenPub.setArtifactId(config.mod().getFileDisplayName() + "-" + platform.name().toLowerCase(Locale.ROOT) + "-" + target.gameVersion());
                 mavenPub.from(project.getComponents().findByName("java"));
             });
         });
