@@ -109,7 +109,7 @@ public class JavaProjectModule {
         }), "pack.mcmeta", "fabric.mod.json", "META-INF/mods.toml", "META-INF/neoforge.mods.toml", "*.mixins.json");
 
         // Maven Config
-        configureMavenPublishing(project);
+        configureMavenPublishing(project, target, platform, config);
 
         // Reduce file size by minifying files with JSON data.
         minifyJsonData(project, "**/*.json", "**/*.mcmeta");

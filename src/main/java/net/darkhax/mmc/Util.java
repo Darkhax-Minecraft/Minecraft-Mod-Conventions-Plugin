@@ -2,6 +2,9 @@ package net.darkhax.mmc;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.darkhax.mmc.config.BuildConfig;
+import net.darkhax.mmc.config.GameTarget;
+import net.darkhax.mmc.config.Platform;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -88,10 +91,10 @@ public class Util {
         }
     }
 
-    public static void configureMavenPublishing(Project project) {
+    public static void configureMavenPublishing(Project project, GameTarget target, Platform platform, BuildConfig config) {
         project.getExtensions().getByType(PublishingExtension.class).publications(publications -> {
             publications.register("mavenJava", MavenPublication.class, mavenPub -> {
-                mavenPub.setArtifactId(project.getExtensions().getByType(BasePluginExtension.class).getArchivesName().get());
+                mavenPub.setArtifactId(config.mod().getFileDisplayName() + "-" + platform.name() + "-" +  target.gameVersion());
                 mavenPub.from(project.getComponents().findByName("java"));
             });
         });
