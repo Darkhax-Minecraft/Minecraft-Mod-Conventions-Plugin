@@ -7,6 +7,7 @@ import net.darkhax.mmc.module.CommonModule;
 import net.darkhax.mmc.module.FabricModule;
 import net.darkhax.mmc.module.NeoforgeModule;
 import net.darkhax.mmc.module.PatreonModule;
+import net.darkhax.mmc.module.ReadmeModule;
 import net.darkhax.mmc.module.SecretLoader;
 import net.darkhax.mmc.module.ValidationModule;
 import net.darkhax.mmc.module.VersionTrackerModule;
@@ -54,5 +55,6 @@ public class ConventionsPlugin implements Plugin<Project> {
         NeoforgeModule.setupNeoforge(project, buildConfig, gameTarget);
         FabricModule.setupFabric(project, buildConfig, gameTarget);
         VersionTrackerModule.setupVersionTracker(project, buildConfig, gameTarget);
+        ReadmeModule.updateReadme(project, gameTarget, buildConfig);
     }
 }

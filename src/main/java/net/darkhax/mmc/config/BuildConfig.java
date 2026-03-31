@@ -19,4 +19,16 @@ public record BuildConfig(ModData mod, HostedProject curseforge, HostedProject m
             }
         }
     }
+
+    public String cursePage() {
+        return "https://www.curseforge.com/minecraft/mc-mods/" + this.curseforge.slug();
+    }
+
+    public String modrinthPage() {
+        return "https://modrinth.com/mod/" + this.modrinth.slug();
+    }
+
+    public String issuesPage() {
+        return this.mod.repo() + "/issues";
+    }
 }
