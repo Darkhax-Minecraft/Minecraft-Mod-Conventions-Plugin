@@ -4,18 +4,21 @@ import net.darkhax.mmc.ConventionsPlugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
 
-public record BuildConfig(ModData mod, HostedProject curseforge, HostedProject modrinth, List<Dependency> dependencies) {
+public record BuildConfig(ModData mod, HostedProject curseforge, HostedProject modrinth, @Nullable List<Dependency> dependencies) {
 
     public void applyDependencies(Project project, Platform platform) {
-        final DependencyHandler dependencies = project.getDependencies();
-        for (Dependency depInfo : this.dependencies) {
-            final String depNotation = depInfo.maven().get(platform);
-            if (depNotation != null) {
-                ConventionsPlugin.LOGGER.lifecycle("Adding {} dependency '{}' to {}.", depInfo.type().name().toLowerCase(Locale.ROOT), depNotation, project.getDisplayName());
-                dependencies.add("implementation", depNotation);
+        final DependencyHandler projectDeps = project.getDependencies();
+        if (this.dependencies != null) {
+            for (Dependency depInfo : this.dependencies) {
+                final String depNotation = depInfo.maven().get(platform);
+                if (depNotation != null) {
+                    ConventionsPlugin.LOGGER.lifecycle("Adding {} dependency '{}' to {}.", depInfo.type().name().toLowerCase(Locale.ROOT), depNotation, project.getDisplayName());
+                    projectDeps.add("implementation", depNotation);
+                }
             }
         }
     }

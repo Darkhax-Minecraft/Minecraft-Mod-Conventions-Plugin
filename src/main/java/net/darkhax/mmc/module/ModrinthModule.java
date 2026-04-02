@@ -45,11 +45,13 @@ public class ModrinthModule {
             if (platform == Platform.FABRIC) {
                 modrinth.getDependencies().add(new ModDependency("fabric-api", "required"));
             }
-            for (Dependency dependency : config.dependencies()) {
-                if (dependency.type() != DependencyType.MISC && dependency.maven().containsKey(platform)) {
-                    switch (dependency.type()) {
-                        case REQUIRED -> modrinth.getDependencies().add(new ModDependency(dependency.modrinth().slug(), "required"));
-                        case OPTIONAL -> modrinth.getDependencies().add(new ModDependency(dependency.modrinth().slug(), "optional"));
+            if (config.dependencies() != null) {
+                for (Dependency dependency : config.dependencies()) {
+                    if (dependency.type() != DependencyType.MISC && dependency.maven().containsKey(platform)) {
+                        switch (dependency.type()) {
+                            case REQUIRED -> modrinth.getDependencies().add(new ModDependency(dependency.modrinth().slug(), "required"));
+                            case OPTIONAL -> modrinth.getDependencies().add(new ModDependency(dependency.modrinth().slug(), "optional"));
+                        }
                     }
                 }
             }

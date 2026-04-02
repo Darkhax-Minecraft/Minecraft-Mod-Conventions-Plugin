@@ -32,11 +32,13 @@ public class CurseForgeModule {
                     case FABRIC -> mainFile.addGameVersion("Fabric");
                     case NEOFORGE -> mainFile.addGameVersion("NeoForge");
                 }
-                for (Dependency dependency : config.dependencies()) {
-                    if (dependency.type() != DependencyType.MISC && dependency.maven().containsKey(platform)) {
-                        switch (dependency.type()) {
-                            case REQUIRED -> mainFile.addRequirement(dependency.curseforge().slug());
-                            case OPTIONAL -> mainFile.addOptional(dependency.curseforge().slug());
+                if (config.dependencies() != null) {
+                    for (Dependency dependency : config.dependencies()) {
+                        if (dependency.type() != DependencyType.MISC && dependency.maven().containsKey(platform)) {
+                            switch (dependency.type()) {
+                                case REQUIRED -> mainFile.addRequirement(dependency.curseforge().slug());
+                                case OPTIONAL -> mainFile.addOptional(dependency.curseforge().slug());
+                            }
                         }
                     }
                 }
