@@ -95,7 +95,7 @@ public class Util {
     public static void configureMavenPublishing(Project project, GameTarget target, Platform platform, BuildConfig config) {
         project.getExtensions().getByType(PublishingExtension.class).publications(publications -> {
             publications.register("mavenJava", MavenPublication.class, mavenPub -> {
-                mavenPub.setArtifactId(config.mod().getFileDisplayName() + "-" + platform.name().toLowerCase(Locale.ROOT) + "-" + target.gameVersion());
+                mavenPub.setArtifactId(config.mod().id() + "-" + platform.name().toLowerCase(Locale.ROOT) + "-" + target.gameVersion());
                 mavenPub.from(project.getComponents().findByName("java"));
             });
         });
