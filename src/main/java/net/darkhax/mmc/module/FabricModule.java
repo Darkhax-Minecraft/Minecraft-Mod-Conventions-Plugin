@@ -108,7 +108,7 @@ public class FabricModule {
                         "%1$s.fabric.mixins.json"
                       ],
                       "depends": {
-                      %13$s
+                    %13$s
                       },
                       "custom": {
                         "modmenu": {
@@ -162,6 +162,6 @@ public class FabricModule {
     }
 
     private static String dep(String name, String version) {
-        return "  \"" + name + "\": \"" + version + "\"";
+        return "    \"" + name + "\": \"" + version + "\"";
     }
 }
