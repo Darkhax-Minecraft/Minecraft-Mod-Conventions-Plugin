@@ -97,10 +97,10 @@ public class FabricModule {
                       "environment": "%10$s",
                       "entrypoints": {
                         "main": [
-                          "%11$s.fabirc.%12$sFabric"
+                          "%11$s.fabric.%12$sFabric"
                         ],
                         "client": [
-                          "%11$s.fabirc.%12$sFabricClient"
+                          "%11$s.fabric.%12$sFabricClient"
                         ]
                       },
                       "mixins": [
