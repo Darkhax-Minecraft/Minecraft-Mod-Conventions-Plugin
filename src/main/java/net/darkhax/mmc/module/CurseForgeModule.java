@@ -3,10 +3,7 @@ package net.darkhax.mmc.module;
 import net.darkhax.curseforgegradle.Constants;
 import net.darkhax.curseforgegradle.TaskPublishCurseForge;
 import net.darkhax.curseforgegradle.UploadArtifact;
-import net.darkhax.mmc.config.BuildConfig;
-import net.darkhax.mmc.config.Dependency;
-import net.darkhax.mmc.config.DependencyType;
-import net.darkhax.mmc.config.Platform;
+import net.darkhax.mmc.config.*;
 import org.gradle.api.Project;
 import org.jspecify.annotations.Nullable;
 
@@ -14,7 +11,7 @@ import java.util.Set;
 
 public class CurseForgeModule {
 
-    public static void setupCurseForge(Project rootProject, Project subProject, BuildConfig config, Platform platform) {
+    public static void setupCurseForge(Project rootProject, Project subProject, BuildConfig config, Platform platform, GameTarget target) {
         final Object apiKeyProp = rootProject.findProperty("curse_auth");
         if (apiKeyProp instanceof String apiKey) {
             subProject.getPluginManager().apply("net.darkhax.curseforgegradle");
@@ -24,6 +21,7 @@ public class CurseForgeModule {
                 mainFile.changelogType = Constants.CHANGELOG_MARKDOWN;
                 mainFile.changelog = ChangelogModule.getChangelog(rootProject);
                 mainFile.releaseType = Constants.RELEASE_TYPE_RELEASE;
+                mainFile.addGameVersion(target.gameVersion());
                 mainFile.addGameVersion("Client");
                 if (!config.mod().client()) {
                     mainFile.addGameVersion("Server");
