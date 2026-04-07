@@ -12,6 +12,7 @@ import org.gradle.api.plugins.BasePluginExtension;
 import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.external.javadoc.StandardJavadocDocletOptions;
 import org.gradle.jvm.toolchain.JavaLanguageVersion;
@@ -19,15 +20,11 @@ import org.gradle.jvm.toolchain.JavaLanguageVersion;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static net.darkhax.mmc.Util.addExclusiveRepo;
-import static net.darkhax.mmc.Util.addMavenRepo;
-import static net.darkhax.mmc.Util.configureMavenPublishing;
-import static net.darkhax.mmc.Util.renameFile;
-import static net.darkhax.mmc.Util.replaceTokens;
-import static net.darkhax.mmc.Util.setManifest;
+import static net.darkhax.mmc.Util.*;
 
 public class JavaProjectModule {
 
@@ -113,6 +110,11 @@ public class JavaProjectModule {
 
         // Reduce file size by minifying files with JSON data.
         minifyJsonData(project, "**/*.json", "**/*.mcmeta");
+
+        // I like to use the number of compiler errors to gauge how far along I
+        // am when porting. By default, the compiler stops after 100, so I am
+        // upping it to 999,999. If there are more errors than that, I quit.
+        project.getTasks().withType(JavaCompile.class).configureEach(task -> task.getOptions().getCompilerArgs().addAll(Arrays.asList("-Xmaxerrs", "999999")));
     }
 
     private static void minifyJsonData(Project project, String... files) {
