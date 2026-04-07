@@ -65,7 +65,7 @@ public class FabricModule {
         });
 
         // Publishing
-        CurseForgeModule.setupCurseForge(rootProject, fabricProject, config, Platform.FABRIC);
+        CurseForgeModule.setupCurseForge(rootProject, fabricProject, config, Platform.FABRIC, game);
         ModrinthModule.setupModrinth(rootProject, fabricProject, game, config, Platform.FABRIC);
 
         final File fabricJson = fabricProject.file("src/main/resources/fabric.mod.json");

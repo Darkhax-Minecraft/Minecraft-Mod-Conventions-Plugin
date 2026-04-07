@@ -67,7 +67,7 @@ public class NeoforgeModule {
                 neoProject.getConfigurations().named(variant, cfg -> cfg.getAttributes().attribute(loaderAttribute, "neoforge"));
             }
         });
-        CurseForgeModule.setupCurseForge(rootProject, neoProject, config, Platform.NEOFORGE);
+        CurseForgeModule.setupCurseForge(rootProject, neoProject, config, Platform.NEOFORGE, game);
         ModrinthModule.setupModrinth(rootProject, neoProject, game, config, Platform.NEOFORGE);
 
         final File modsToml = neoProject.file("src/main/resources/META-INF/neoforge.mods.toml");
