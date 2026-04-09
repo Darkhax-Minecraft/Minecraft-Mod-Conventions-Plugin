@@ -10,16 +10,13 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
-import org.gradle.api.plugins.BasePluginExtension;
 import org.gradle.api.publish.PublishingExtension;
 import org.gradle.api.publish.maven.MavenPublication;
 import org.gradle.api.tasks.AbstractCopyTask;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.bundling.Jar;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Locale;
@@ -153,5 +150,32 @@ public class Util {
     public static String getEnv(String propertyName, String fallback) {
         final String property = System.getenv(propertyName);
         return property != null && !property.isBlank() ? property : fallback;
+    }
+
+    public static boolean isGitExecutable(File file) {
+        try {
+            final ProcessBuilder pb = new ProcessBuilder("git", "ls-files", "--stage", file.getAbsolutePath());
+            final Process p = pb.start();
+            final BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            final String line = reader.readLine();
+            p.waitFor();
+            return line.startsWith("100755");
+        }
+        catch (Exception e) {
+            ConventionsPlugin.LOGGER.warn("Could not determine if file {} is executable.", file.getAbsolutePath(), e);
+            return false;
+        }
+    }
+
+    public static void makeGitExecutable(File file) {
+        try {
+            final ProcessBuilder pb = new ProcessBuilder("git", "update-index", "--chmod=+x", file.getAbsolutePath());
+            pb.inheritIO();
+            final Process p = pb.start();
+            p.waitFor();
+        }
+        catch (Exception e) {
+            ConventionsPlugin.LOGGER.warn("Could not mark {} as executable.", file.getAbsolutePath(), e);
+        }
     }
 }

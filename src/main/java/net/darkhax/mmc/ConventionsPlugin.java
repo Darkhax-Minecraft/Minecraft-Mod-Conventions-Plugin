@@ -2,20 +2,11 @@ package net.darkhax.mmc;
 
 import net.darkhax.mmc.config.BuildConfig;
 import net.darkhax.mmc.config.GameTarget;
-import net.darkhax.mmc.module.ChangelogModule;
-import net.darkhax.mmc.module.CommonModule;
-import net.darkhax.mmc.module.FabricModule;
-import net.darkhax.mmc.module.NeoforgeModule;
-import net.darkhax.mmc.module.PatreonModule;
-import net.darkhax.mmc.module.ReadmeModule;
-import net.darkhax.mmc.module.SecretLoader;
-import net.darkhax.mmc.module.ValidationModule;
-import net.darkhax.mmc.module.VersionTrackerModule;
+import net.darkhax.mmc.module.*;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
-import org.gradle.api.provider.Provider;
 import org.gradle.process.ExecOperations;
 
 import javax.inject.Inject;
@@ -56,5 +47,12 @@ public class ConventionsPlugin implements Plugin<Project> {
         FabricModule.setupFabric(project, buildConfig, gameTarget);
         VersionTrackerModule.setupVersionTracker(project, buildConfig, gameTarget);
         ReadmeModule.updateReadme(project, gameTarget, buildConfig);
+
+        // Make Gradlew executable
+        final File gradleWrapper = project.file("gradlew");
+        if (!Util.isGitExecutable(gradleWrapper)) {
+            Util.makeGitExecutable(gradleWrapper);
+            LOGGER.lifecycle("Gradle wrapper has been marked as executable! Make sure to commit the changes :)");
+        }
     }
 }
