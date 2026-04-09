@@ -22,6 +22,9 @@ public class CurseForgeModule {
                 mainFile.changelog = ChangelogModule.getChangelog(rootProject);
                 mainFile.releaseType = Constants.RELEASE_TYPE_RELEASE;
                 mainFile.addGameVersion(target.gameVersion());
+                if (config.isCompatabilityEnabled()) {
+                    target.compatibleWith().forEach(mainFile::addGameVersion);
+                }
                 mainFile.addGameVersion("Client");
                 if (!config.mod().client()) {
                     mainFile.addGameVersion("Server");

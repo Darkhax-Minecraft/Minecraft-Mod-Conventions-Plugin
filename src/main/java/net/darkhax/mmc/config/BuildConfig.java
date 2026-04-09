@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
 
-public record BuildConfig(ModData mod, HostedProject curseforge, HostedProject modrinth, @Nullable List<Dependency> dependencies) {
+public record BuildConfig(ModData mod, HostedProject curseforge, HostedProject modrinth, @Nullable List<Dependency> dependencies, Boolean enable_compat_mode) {
 
     public void applyDependencies(Project project, Platform platform) {
         final DependencyHandler projectDeps = project.getDependencies();
@@ -33,5 +33,9 @@ public record BuildConfig(ModData mod, HostedProject curseforge, HostedProject m
 
     public String issuesPage() {
         return this.mod.repo() + "/issues";
+    }
+
+    public boolean isCompatabilityEnabled() {
+        return this.enable_compat_mode == null || this.enable_compat_mode;
     }
 }

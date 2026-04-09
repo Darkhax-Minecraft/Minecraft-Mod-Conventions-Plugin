@@ -28,6 +28,9 @@ public class ModrinthModule {
                 case NEOFORGE -> modrinth.loaders.add("neoforge");
             }
             modrinth.gameVersions.add(target.gameVersion());
+            if (config.isCompatabilityEnabled()) {
+                target.compatibleWith().forEach(modrinth.gameVersions::add);
+            }
             modrinth.getUploadFile().set(subProject.getTasks().named("jar").get());
 
             // changelog
