@@ -34,7 +34,10 @@ public class ConventionsPlugin implements Plugin<Project> {
         }
         final BuildConfig buildConfig = Util.read(buildConfigFile, BuildConfig.class);
         ValidationModule.validate(project, buildConfig);
-        final GameTarget gameTarget = GameTarget.TARGET;
+        final GameTarget gameTarget = buildConfig.isCompatabilityEnabled() ? GameTarget.BUILTIN : GameTarget.BUILTIN.strictGameTarget();
+        if (buildConfig.isCompatabilityEnabled()) {
+            LOGGER.lifecycle("Compatibility mode is enabled for this build. Mod will try to target MC {}, Fabric {}, and NeoForge {}", gameTarget.minGameVersion(), gameTarget.minFabricLoader() + " " + gameTarget.minFabric(), gameTarget.neoforge());
+        }
         // Project Properties
         project.setGroup(buildConfig.mod().group());
         project.setVersion(gameTarget.adjustedGameVersion() + "." + Util.buildNumber());

@@ -143,9 +143,9 @@ public class FabricModule {
 
     private static String buildDeps(BuildConfig config, GameTarget target) {
         final StringJoiner deps = new StringJoiner("," + System.lineSeparator());
-        deps.add(dep("fabricloader", ">=" + target.fabricLoader()));
+        deps.add(dep("fabricloader", ">=" + target.minFabricLoader()));
         deps.add(dep("fabric-api", "*"));
-        deps.add(dep("minecraft", ">=" + target.gameVersion()));
+        deps.add(dep("minecraft", ">=" + target.minGameVersion()));
         deps.add(dep("java", ">=" + target.javaVersion()));
 
         if (config.dependencies() != null) {

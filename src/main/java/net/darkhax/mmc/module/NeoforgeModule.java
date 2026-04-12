@@ -122,8 +122,8 @@ public class NeoforgeModule {
     private static String buildDeps(BuildConfig config, GameTarget target) {
         final StringJoiner deps = new StringJoiner(System.lineSeparator());
 
-        deps.add(dep(config.mod().id(), "minecraft", target.gameVersion()));
-        deps.add(dep(config.mod().id(), "neoforge", "[" + target.neoforge() + ",)"));
+        deps.add(dep(config.mod().id(), "minecraft", target.minGameVersion()));
+        deps.add(dep(config.mod().id(), "neoforge", "[" + target.minNeoforge() + ",)"));
 
         if (config.dependencies() != null) {
             for (Dependency dependency : config.dependencies()) {
