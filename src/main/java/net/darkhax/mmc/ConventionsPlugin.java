@@ -51,11 +51,11 @@ public class ConventionsPlugin implements Plugin<Project> {
         VersionTrackerModule.setupVersionTracker(project, buildConfig, gameTarget);
         ReadmeModule.updateReadme(project, gameTarget, buildConfig);
 
-        // Make Gradlew executable
-        final File gradleWrapper = project.file("gradlew");
-        if (!Util.isGitExecutable(gradleWrapper)) {
-            Util.makeGitExecutable(gradleWrapper);
-            LOGGER.lifecycle("Gradle wrapper has been marked as executable! Make sure to commit the changes :)");
-        }
+//        // Make Gradlew executable
+//        final File gradleWrapper = project.file("gradlew");
+//        if (!Util.isGitExecutable(gradleWrapper)) {
+//            Util.makeGitExecutable(gradleWrapper);
+//            LOGGER.lifecycle("Gradle wrapper has been marked as executable! Make sure to commit the changes :)");
+//        }
     }
 }
