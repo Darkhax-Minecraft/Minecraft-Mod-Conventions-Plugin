@@ -95,7 +95,7 @@ public class ReadmeModule {
     private static String buildSponsors(BuildConfig config) {
         return """
                ## Sponsors
-               [![](https://assets.blamejared.com/nodecraft/darkhax.jpg)](https://nodecraft.com/r/darkhax)    
+               [![](https://assets.blamejared.com/nodecraft/darkhax.jpg)](https://nodecraft.com/r/darkhax)\s\s\s\s
                %s is proudly sponsored by Nodecraft! Play your favorite games with your friends using their high
                performance game servers! Use code **[DARKHAX](https://nodecraft.com/r/darkhax)** for 30%% off your first
                month of service!
