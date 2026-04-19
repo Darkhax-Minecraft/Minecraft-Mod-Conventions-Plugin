@@ -96,12 +96,7 @@ public class FabricModule {
                       "icon": "logo_%1$s.png",
                       "environment": "%10$s",
                       "entrypoints": {
-                        "main": [
-                          "%11$s.fabric.%12$sFabric"
-                        ],
-                        "client": [
-                          "%11$s.fabric.%12$sFabricClient"
-                        ]
+                    %15$s
                       },
                       "mixins": [
                         "%1$s.common.mixins.json",
@@ -133,12 +128,33 @@ public class FabricModule {
                     config.mod().group(),
                     config.mod().getFileDisplayName(),
                     buildDeps(config, game),
-                    config.modrinthPage()
+                    config.modrinthPage(),
+                    buildEntrypoints(fabricProject, config)
             ), StandardCharsets.UTF_8);
         }
         catch (IOException e) {
             throw new GradleException("Could not write the fabric.mod.json file!", e);
         }
+    }
+
+    private static String buildEntrypoints(Project fabricProject, BuildConfig config) {
+        final StringJoiner entrypoints = new StringJoiner("," + System.lineSeparator());
+        entrypoints.add(entrypointString("main", config.mod().group() + ".fabric." + config.mod().getFileDisplayName() + "Fabric"));
+        if (fabricProject.file(config.mod().group() + "/fabric/" + config.mod().getFileDisplayName() + "FabricClient").exists()) {
+            entrypoints.add(entrypointString("client", config.mod().group() + ".fabric." + config.mod().getFileDisplayName() + "FabricClient"));
+        }
+        if (config.dependencies() != null && config.dependencies().stream().anyMatch(dep -> dep.name().equalsIgnoreCase("JEI"))) {
+            entrypoints.add(entrypointString("jei_mod_plugin", config.mod().group() + ".common.impl.addons.jei." + config.mod().getFileDisplayName() + "JeiPlugin"));
+        }
+        return entrypoints.toString();
+    }
+
+    private static String entrypointString(String entrypoint, String className) {
+        return """
+                   "%s": [
+                     "%s
+                   ]
+                """.formatted(entrypoint, className);
     }
 
     private static String buildDeps(BuildConfig config, GameTarget target) {
