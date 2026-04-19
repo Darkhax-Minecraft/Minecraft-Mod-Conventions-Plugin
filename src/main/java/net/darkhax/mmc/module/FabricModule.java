@@ -140,7 +140,7 @@ public class FabricModule {
     private static String buildEntrypoints(Project fabricProject, BuildConfig config) {
         final StringJoiner entrypoints = new StringJoiner("," + System.lineSeparator());
         entrypoints.add(entrypointString("main", config.mod().group() + ".fabric." + config.mod().getFileDisplayName() + "Fabric"));
-        if (fabricProject.file("src/main/java/" + config.mod().group() + "/fabric/" + config.mod().getFileDisplayName() + "FabricClient").exists()) {
+        if (fabricProject.file("src/main/java/" + config.mod().group() + "/fabric/" + config.mod().getFileDisplayName() + "FabricClient.java").exists()) {
             entrypoints.add(entrypointString("client", config.mod().group() + ".fabric." + config.mod().getFileDisplayName() + "FabricClient"));
         }
         if (config.dependencies() != null && config.dependencies().stream().anyMatch(dep -> dep.name().equalsIgnoreCase("JEI"))) {
