@@ -25,7 +25,7 @@ public class ChangelogModule {
             final String lastCommit = Util.getEnv("GIT_PREVIOUS_SUCCESSFUL_COMMIT", null);
             final String branchDisplayName = Util.getEnv("GIT_BRANCH", target.gameVersion());
             if (lastCommit == null) {
-                return "This is the first successful build for " + branchDisplayName + ". You can learn more here: " + config.mod().repo() + "/commits/" + branchDisplayName + "/";
+                return "This is the first successful build for " + branchDisplayName + ". You can learn more [here](" + config.mod().repo() + "/commits/" + branchDisplayName + "/)";
             }
             else {
                 try {
@@ -37,7 +37,7 @@ public class ChangelogModule {
                     final StringJoiner changelog = new StringJoiner(System.lineSeparator());
                     for (GitCommit commit : parseGitLog(outputStream.toString())) {
                         if (!commit.message.contains("$exclude_changelog$")) {
-                            changelog.add("- " + commit.subject);
+                            changelog.add("- " + commit.subject + "    ");
                         }
                     }
                     return changelog.toString();

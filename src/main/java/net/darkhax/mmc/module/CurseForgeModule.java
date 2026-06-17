@@ -5,7 +5,6 @@ import net.darkhax.curseforgegradle.TaskPublishCurseForge;
 import net.darkhax.curseforgegradle.UploadArtifact;
 import net.darkhax.mmc.config.*;
 import org.gradle.api.Project;
-import org.jspecify.annotations.Nullable;
 
 import java.util.Set;
 
@@ -45,9 +44,9 @@ public class CurseForgeModule {
                 }
                 final Set<String> patrons = PatreonModule.getPatrons(rootProject);
                 if (patrons != null && !patrons.isEmpty()) {
-                    mainFile.changelog += "\n\nThis project is made possible with [Patreon](https://www.patreon.com/Darkhax) support from players like you! Thank you!";
+                    mainFile.changelog += System.lineSeparator() + System.lineSeparator() + "This project is made possible with [Patreon](https://www.patreon.com/Darkhax) support from players like you! Thank you!    ";
                     for (String patron : patrons) {
-                        mainFile.changelog += "\n- " + patron;
+                        mainFile.changelog += System.lineSeparator() + "- " + patron + "    ";
                     }
                 }
             });
