@@ -6,7 +6,7 @@ plugins {
 
 apply from: 'gradle/property_loader.gradle'
 group = 'net.darkhax.mmc'
-version = '26.1.2'
+version = '26.2.0'
 def buildNumber = System.getenv('BUILD_NUMBER') ? System.getenv('BUILD_NUMBER') : System.getenv('TRAVIS_BUILD_NUMBER') ? System.getenv('TRAVIS_BUILD_NUMBER') : '0'
 version = "${project.version}.${buildNumber}".toString()
 
