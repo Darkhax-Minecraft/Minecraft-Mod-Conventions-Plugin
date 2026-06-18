@@ -37,9 +37,9 @@ public class ModrinthModule {
             StringBuilder changelog = new StringBuilder(ChangelogModule.getChangelog(rootProject));
             final Set<String> patrons = PatreonModule.getPatrons(rootProject);
             if (patrons != null && !patrons.isEmpty()) {
-                changelog.append("\n\nThis project is made possible with [Patreon](https://www.patreon.com/Darkhax) support from players like you! Thank you!");
+                changelog.append(System.lineSeparator()).append(System.lineSeparator()).append("This project is made possible with [Patreon](https://www.patreon.com/Darkhax) support from players like you! Thank you!    ");
                 for (String patron : patrons) {
-                    changelog.append("\n- ").append(patron);
+                    changelog.append(System.lineSeparator()).append("- ").append(patron).append("    ");
                 }
             }
             modrinth.getChangelog().set(changelog.toString());

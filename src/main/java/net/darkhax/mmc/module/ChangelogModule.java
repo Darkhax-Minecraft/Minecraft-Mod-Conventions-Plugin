@@ -1,6 +1,5 @@
 package net.darkhax.mmc.module;
 
-import net.darkhax.mmc.ConventionsPlugin;
 import net.darkhax.mmc.Util;
 import net.darkhax.mmc.config.BuildConfig;
 import net.darkhax.mmc.config.GameTarget;
@@ -9,11 +8,14 @@ import org.gradle.api.provider.Provider;
 import org.gradle.process.ExecOperations;
 
 import java.io.ByteArrayOutputStream;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
 public class ChangelogModule {
+
+    private static String RS = String.valueOf((char) 0x1E);
+    private static String US = String.valueOf((char) 0x1F);
 
     public static void setupChangelog(Project project, BuildConfig config, ExecOperations exec, GameTarget target) {
         final Provider<String> changelogProvider = project.provider(() -> {
@@ -21,24 +23,25 @@ public class ChangelogModule {
             final String lastCommit = Util.getEnv("GIT_PREVIOUS_SUCCESSFUL_COMMIT", null);
             final String branchDisplayName = Util.getEnv("GIT_BRANCH", target.gameVersion());
             if (lastCommit == null) {
-                return "This is the first successful build for " + branchDisplayName + ". You can learn more here: " + config.mod().repo() + "/commits/" + branchDisplayName + "/";
+                return "This is the first successful build for " + branchDisplayName + ". You can learn more [here](" + config.mod().repo() + "/commits/" + branchDisplayName + "/).";
             }
             else {
                 try {
                     final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                     exec.exec(spec -> {
-                        spec.commandLine("git", "log", "--pretty=format:'%H%x1f%h%x1f%an%x1f%s%x1f%B'", latestCommit + "..." + lastCommit);
+                        spec.commandLine("git", "log", "--pretty=format:'" + RS + "%an" + US + "%s" + US + "%B" + "'", latestCommit + "..." + lastCommit);
                         spec.setStandardOutput(outputStream);
                     });
                     final StringJoiner changelog = new StringJoiner(System.lineSeparator());
-                    for (GitCommit commit : parse(outputStream.toString())) {
+                    for (GitCommit commit : parseGitLog(outputStream.toString())) {
                         if (!commit.message.contains("$exclude_changelog$")) {
-                            changelog.add("- " + commit.subject);
+                            changelog.add("- " + commit.subject + "    ");
                         }
                     }
                     return changelog.toString();
                 }
                 catch (Exception e) {
+                    project.getLogger().error("Failed to parse changelog file.", e);
                     return "The changelog for this build is unavailable.";
                 }
             }
@@ -46,7 +49,7 @@ public class ChangelogModule {
         project.getExtensions().add("mod_changelog", changelogProvider);
     }
 
-    public record GitCommit(String hash, String shortHash, String author, String subject, String message) {
+    public record GitCommit(String author, String subject, String message) {
 
     }
 
@@ -59,25 +62,13 @@ public class ChangelogModule {
         return changelog;
     }
 
-    public static List<GitCommit> parse(String input) {
-        final LinkedList<GitCommit> commits = new LinkedList<>();
-        for (String raw : input.split("(?=\\b[0-9a-f]{40}\\b)")) {
-            if (raw.isBlank()) continue;
-
-            // Split fields using the unit separator
-            String[] parts = raw.split("\u001f", 5);
-
-            if (parts.length != 5) {
-                ConventionsPlugin.LOGGER.warn("Skipping changelog item '{}'", raw);
+    public static List<GitCommit> parseGitLog(String gitLogOutput) {
+        final List<GitCommit> commits = new ArrayList<>();
+        for (String entry : gitLogOutput.split(RS)) {
+            final String[] parts = entry.split(US);
+            if (parts.length == 3) {
+                commits.add(new GitCommit(parts[0].trim(), parts[1].trim(), parts[2].trim()));
             }
-
-            String hash = parts[0].trim();
-            String shortHash = parts[1].trim();
-            String author = parts[2].trim();
-            String subject = parts[3].trim();
-            String message = parts[4].trim();
-
-            commits.add(new GitCommit(hash, shortHash, author, subject, message));
         }
         return commits;
     }
