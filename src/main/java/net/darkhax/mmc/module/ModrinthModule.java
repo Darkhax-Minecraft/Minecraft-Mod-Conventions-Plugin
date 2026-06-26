@@ -52,7 +52,7 @@ public class ModrinthModule {
                 for (Dependency dependency : config.dependencies()) {
                     if (dependency.type() != DependencyType.MISC && dependency.maven().containsKey(platform)) {
                         switch (dependency.type()) {
-                            case REQUIRED -> modrinth.getDependencies().add(new ModDependency(dependency.modrinth().slug(), "required"));
+                            case REQUIRED, SOFT_DEP -> modrinth.getDependencies().add(new ModDependency(dependency.modrinth().slug(), "required"));
                             case OPTIONAL -> modrinth.getDependencies().add(new ModDependency(dependency.modrinth().slug(), "optional"));
                         }
                     }

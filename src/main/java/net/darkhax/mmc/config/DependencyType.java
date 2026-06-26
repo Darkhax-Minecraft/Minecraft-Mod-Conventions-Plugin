@@ -10,6 +10,13 @@ public enum DependencyType {
     REQUIRED,
 
     /**
+     * The dependency will be marked as required when uploading to platforms for the best experience, but will not be
+     * required to run the mod.
+     */
+    @SerializedName("soft_dep")
+    SOFT_DEP,
+
+    /**
      * The dependency will be marked as optional when uploading to platforms like CurseForge and Modrinth.
      */
     @SerializedName("optional")
