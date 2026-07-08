@@ -37,7 +37,7 @@ public class CurseForgeModule {
                     for (Dependency dependency : config.dependencies()) {
                         if (dependency.type() != DependencyType.MISC && dependency.maven().containsKey(platform)) {
                             switch (dependency.type()) {
-                                case REQUIRED -> mainFile.addRequirement(dependency.curseforge().slug());
+                                case REQUIRED, SOFT_DEP -> mainFile.addRequirement(dependency.curseforge().slug());
                                 case OPTIONAL -> mainFile.addOptional(dependency.curseforge().slug());
                             }
                         }
