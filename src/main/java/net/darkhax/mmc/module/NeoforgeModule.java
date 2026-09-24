@@ -86,8 +86,7 @@ public class NeoforgeModule {
                     displayName = "%5$s"
                     updateJSONURL = "https://updates.blamejared.com/get?n=%3$s&gv=%6$s&ml=neoforge"
                     displayURL = "%7$s"
-                    logoFile = "logo_%3$s.png"
-                    logoBlur = false
+                    iconFile = "logo_%3$s.png"
                     credits = "This project is made possible with Patreon support from players like you. Thank you! %9$s"
                     authors = "%8$s"
                     description = "%10$s"
